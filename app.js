@@ -16,7 +16,7 @@
 const route = require('./routes/route.js');
 const express = require('express');
 const app = express();
-const restaurantapi = require('./controller/restaurantapi');
+const restaurantapi = require('./controllers/restaurantapi');
 const cors=require("cors");
 const corsOptions ={
    origin:'*', 
