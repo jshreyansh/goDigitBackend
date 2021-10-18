@@ -21,5 +21,6 @@ router.delete('/api/:restaurantID/:categoryName/:itemName',restaurantapi.deleteI
 
 router.post('/register', userController.register);
 router.post('/login', userController.login);
+router.get('/verify/:verficationCode', userController.verification);
 
 module.exports = router

@@ -2,6 +2,7 @@ const {validator, jwt} = require('../utils')
 const {systemConfig} = require('../configs')
 const {UserModel} = require('../models')
 const shortid = require('shortid')
+const nodemailer = require('nodemailer');
 const baseUrl = 'http:localhost:3000'
 
 const register = async function (req, res) {
@@ -113,9 +114,29 @@ const login = async function (req, res) {
     }
 }
 
+const verification = async function (req, res) {
+    try {
+        const urlCode = req.params.verficationCode;
+
+        const verified = await UserModel.findOne({urlCode});
+
+        if(verified) {
+            return res.redirect("https://www.google.co.in/")
+            // return res.status(200).send({status: true, message: `verification Successful`}).redirect("www.google.com");
+        }
+        else{
+            return res.status(401).send({status: false, message: `verification not complete`});
+        }
+
+       
+    } catch (error) {
+        return res.status(500).send({status: false, message: error.message});
+    }
+}
 
 
 module.exports = {
     register,
-    login
+    login,
+    verification
 }
