@@ -1,6 +1,8 @@
 const express = require('express');
 const userController = require('../controllers/userController')
 const auth=require('../middleware/auth')
+const menuController = require('../controllers/menuController')
+const orderController = require('../controllers/orderController')
 const mongoose=require('mongoose')
 const jwt=require('jsonwebtoken')
 const router = express.Router();
@@ -36,7 +38,10 @@ router.post('/api/user',userController.registerUser)
 
 router.post('/api/verifyOtp',userController.verifyOtp)
 router.get('/api/userDetails', auth, userController.userDetails)
-
+router.post('/api/userMenuCreate',auth,menuController.createMenu)
+router.get('api/getMenu',menuController.getMenu)
+router.post('/api/createOrder',auth,orderController.createOrder)
+router.get('/api/orderList',auth,orderController.getOrderList)
 // router.get('/api/getUsers',userController.getUsers)
 // router.post('/api/userLogin',userController.userLogin)
 // //router.get('/api/getUserInfo/:_id"',userController.getUserInfo)

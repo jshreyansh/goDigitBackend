@@ -29,7 +29,14 @@ const userSchema = new mongoose.Schema({
         default:false,
     },
     otp:Number,
-
+    menuCreated : {
+        type:Boolean,
+        default : false
+    },
+    totalOrdersPlaced : {
+        type : Number,
+        default : 0
+    }
 })
 
 userSchema.pre('save', async function () {
