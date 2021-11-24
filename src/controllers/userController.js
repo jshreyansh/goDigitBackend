@@ -68,7 +68,7 @@ let verifyOtp = async (req,res)=>{
             })
         }
         else{
-            res.send({
+            res.status(400).send({
                 otpVerified:false,
                 mobile:mobile
             })
