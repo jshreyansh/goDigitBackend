@@ -8,18 +8,17 @@ let registerUser = async function (req,res) {
     try{
             
         if(req.body){
-            let name = req.body.name
+           
             let mobile = req.body.mobile
 
             let query = {mobile: mobile}
             let user = await userModel.findOne(query)
             if (user) {
                 // smsSender.sendOtp(mobile, user.otp)
-                res.send("user exists")
+                res.status(403).send("user exists")
             } else
             {
                 var newUser = new userModel({
-                    name: name,
                     mobile: mobile
                 })
                 let result = await newUser.save()
