@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 //const config= require('../../config')
 const jwt= require ('jsonwebtoken')
 
-const otpGenerator = require('otp-generator')
+// const otpGenerator = require('otp-generator')
 //const smsSender= require('../controllers/smsSender')
 
 
@@ -47,7 +47,9 @@ userSchema.pre('save', async function () {
 
 let generateOtp = function (user) {
     console.log("in - let generateOtp = function (user) {")
-let otp = otpGenerator.generate(6, { digits: true, specialChars: false, upperCase: false, alphabets: false });
+// let otp = otpGenerator.generate(6, { digits: true, specialChars: false, upperCase: false, alphabets: false });
+let otp=Math.floor(1000 + Math.random() * 9000);
+
 user.otp = otp;
 return;
 }
