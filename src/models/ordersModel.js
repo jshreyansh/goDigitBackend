@@ -20,7 +20,7 @@ let OrdersSchema = new mongoose.Schema({
         type : Number
     },
     "orderNumber" : {
-        type : number
+        type : Number
     },
     "isPaid" : {
         type : Boolean,

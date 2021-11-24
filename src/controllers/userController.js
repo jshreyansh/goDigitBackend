@@ -1,4 +1,5 @@
 const userModel =require('../models/userModel')
+const menuModel =require('../models/menuModel')
 const mongoose=require('mongoose')
 const jwt=require('jsonwebtoken')
 
@@ -38,6 +39,18 @@ let registerUser = async function (req,res) {
 
     
 }
+
+let getMenu = async function(req,res){
+    try{
+          const userId = req.params.userId
+          const menuDocument = await menuModel.findOne({userId:userId})
+          res.send(menuDocument.menu)
+    }
+    catch(error)
+    {
+       res.status(500).send({status:false,msg:error.message}) 
+    }
+}
 let verifyOtp = async (req,res)=>{
     let otp=req.body.otpEntered
     let mobile=req.body.mobile
@@ -45,6 +58,7 @@ let verifyOtp = async (req,res)=>{
     var userDocument=await userModel.findOne({mobile:mobile})
     if (userDocument)
     {
+        console.log(otp)
         if (userDocument.otp==otp)
         {
             const token=userDocument.generateToken()
@@ -196,4 +210,6 @@ module.exports.getUserInfo=getUserInfo
 module.exports.putUserInfo=putUserInfo
 module.exports.verifyOtp=verifyOtp
 module.exports.userDetails=userDetails
+module.exports.getMenu=getMenu
+
 
