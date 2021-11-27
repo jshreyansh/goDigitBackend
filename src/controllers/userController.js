@@ -15,14 +15,14 @@ let registerUser = async function (req,res) {
             let user = await userModel.findOne(query)
             if (user) {
                 // smsSender.sendOtp(mobile, user.otp)
-                res.status(403).send("user exists")
+                res.status(200).send({ status: true,message :"existing user" })
             } else
             {
                 var newUser = new userModel({
                     mobile: mobile
                 })
                 let result = await newUser.save()
-                res.send(result)
+                res.status(200).send({ status: true,message :"New user" })
             }
         }
         else {
@@ -62,15 +62,18 @@ let verifyOtp = async (req,res)=>{
         {
             const token=userDocument.generateToken()
                 // jwt.sign({mobile: user.mobile}, config.get('jwtPrivateKey'))
-            res.header('x-auth-token', token).send({
+            res.status(200).header('x-auth-token', token).send({
                 otpVerified:true,
-                mobile:mobile
+                mobile:mobile,
+                userId:userDocument._id
             })
         }
         else{
-            res.status(400).send({
+            res.status(200).send({
                 otpVerified:false,
-                mobile:mobile
+                mobile:mobile,
+                userId:userDocument._id
+
             })
         }
     }
