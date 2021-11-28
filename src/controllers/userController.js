@@ -66,7 +66,8 @@ let verifyOtp = async (req,res)=>{
             res.status(200).header('x-auth-token', token).send({
                 otpVerified:true,
                 mobile:mobile,
-                userId:userDocument._id
+                userId:userDocument._id,
+                token:token
             })
         }
         else{
