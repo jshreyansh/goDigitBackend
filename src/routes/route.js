@@ -38,6 +38,7 @@ router.post('/api/user',userController.registerUser)
 
 router.post('/api/verifyOtp',userController.verifyOtp)
 router.get('/api/userDetails', auth, userController.userDetails)
+router.post('/api/editUserDetails', auth, userController.editUserDetails)
 router.post('/api/userMenuCreate',auth,menuController.createMenu)
 router.get('api/getMenu',menuController.getMenu)
 router.post('/api/createOrder',auth,orderController.createOrder)

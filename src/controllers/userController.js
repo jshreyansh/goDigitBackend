@@ -51,7 +51,8 @@ let getMenu = async function(req,res){
     }
 }
 let verifyOtp = async (req,res)=>{
-    let otp=req.body.otpEntered
+    try{
+        let otp=req.body.otpEntered
     let mobile=req.body.mobile
 
     var userDocument=await userModel.findOne({mobile:mobile})
@@ -83,24 +84,57 @@ let verifyOtp = async (req,res)=>{
             mobile:"Invalid Mobile"
         })
     }
+    }catch(error){
+        res.status(500).send({ status: false, msg: error.message })
+    }
+    
 }
 
 let userDetails= async (req,res)=> {
     try{
-        let mobile=req.user.mobile
-        let query = {mobile: mobile}
-        let user = await userModel.findOne(query)
-        if (user) {
-            res.status(200).send({"userDetails": user})
+        const userId = req.body.userId
+        const query = {"_id":userId}
+        let userDocument = await userModel.findOne(query)
+        const userDetails = {
+            userName : userDocument.name,
+            stallName : userDocument.stallName,
+            livesIn : userDocument.location.cityName
         }
-        else res.status(400).send("user not found. something went wrong")
-        
+
+        if (userDocument) {
+            res.status(200).send({status:true,"userDetails": userDetails})
+        }
+        else res.status(200).send({ status: false, msg: error.message })
     }catch(error){
-        res.status(500).send({ status: false, msg: error.message })
+        res.status(200).send({ status: false, msg: error.message })
     }
 
 }
-
+let editUserDetails = async(req,res)=>{
+    try{
+          const userId = req.body.userId
+          const query = {"_id":userId}
+          let userDocument = await userModel.findOne(query)
+          console.log('req.body',req.body)
+          userDocument.stallName = req.body.stallName
+          userDocument.location.cityName = req.body.livesIn
+          userDocument.name = req.body.userName
+          let result = await userDocument.save()
+          console.log("userDocument",userDocument)
+          console.log("result",result)
+          const userDetails = {
+            userName : userDocument.name,
+            stallName : userDocument.stallName,
+            livesIn : userDocument.location.cityName
+        }
+        res.status(200).send({status : true,"userDetails": userDetails})
+           
+    }
+    catch(error)
+    {
+        res.status(200).send({status:false,msg:error.message})
+    }
+}
 let getUsers = async function (req,res) {
     try{
         let users=await userModel.find({isDeleted:false})
@@ -213,5 +247,6 @@ module.exports.putUserInfo=putUserInfo
 module.exports.verifyOtp=verifyOtp
 module.exports.userDetails=userDetails
 module.exports.getMenu=getMenu
+module.exports.editUserDetails=editUserDetails
 
 

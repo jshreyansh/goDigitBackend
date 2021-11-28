@@ -9,7 +9,7 @@ const jwt= require ('jsonwebtoken')
 const userSchema = new mongoose.Schema({
     name:{
         type:String,
-
+        default:""
     },
     mobile:{
         type:String,
@@ -34,6 +34,20 @@ const userSchema = new mongoose.Schema({
     totalOrdersPlaced : {
         type : Number,
         default : 0
+    },
+    location:{
+        type:
+        {
+            cityName : {
+                type : String,
+                default:""
+            }
+        },
+        default:{}
+    },
+    stallName:{
+        type:String,
+        default:""
     }
 })
 

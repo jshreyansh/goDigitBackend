@@ -8,7 +8,7 @@ module.exports = function(req, res, next){
     try{
         const decodedTokenData=jwt.verify(token, "myStallSecretUserAuthKey")
         req.user=decodedTokenData  //decodedTokenData= { mobile: '8287946944', firstName:"pritesh", iat: 1589315049 }
-
+         console.log("decodedTokenData",decodedTokenData)
         next();
     }
     catch(exception) {
