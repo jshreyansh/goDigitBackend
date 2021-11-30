@@ -93,7 +93,9 @@ let verifyOtp = async (req,res)=>{
 
 let userDetails= async (req,res)=> {
     try{
-        const userId = req.body.userId
+        // const userId = req.body.userId
+        console.log(req.params)
+        const userId = req.params.userId
         const query = {"_id":userId}
         let userDocument = await userModel.findOne(query)
         const userDetails = {
