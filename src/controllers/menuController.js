@@ -81,10 +81,10 @@ module.exports = {
         try{
 
             // const data = await menuService.createMenu(req.body, req.files, req.params, req.query)
-            let userId=req.userId
+            let userId=req.params.userId
             let menuData = await menuModel.findOne({userId:userId})
             if(menuData){
-                res.status(200).send({ status: true,data :menuData })
+                res.status(200).send({ status: true,data :menuData.menu })
             }
             else{
                 res.status(200).send({ status: false,message :"menu not found" })
