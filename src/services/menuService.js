@@ -11,6 +11,8 @@ module.exports = {
             if(!userData){
                 reject({"status": false, "code": 404, "msg": "user does not exist"})
             }
+            let menuData = await menuModel.findOne({userId:userId})
+        if(!menuData){
             const menu = body.menu 
             let newMenu=[]
             menu.forEach((item,index,arr)=>{
@@ -19,7 +21,7 @@ module.exports = {
                 if(item.itemCount) block.itemCount=item.itemCount
                 newMenu.push(block)
             })
-            var menuData = new menuModel({
+            let menuData = new menuModel({
                 userId:userId,
                 menu:newMenu
             })
@@ -32,6 +34,30 @@ module.exports = {
                     resolve({"status": true, "code": 200, "msg": saved})
                 }
             })
+        }
+        else{
+            const menu = body.menu 
+            let menuUpdated
+            console.log(menuData.menu)
+            menu.forEach((item,index,arr)=>{
+                let block={}
+                if(item.category) block.category=item.category
+                if(item.itemCount) block.itemCount=item.itemCount
+                menuData.menu.push(block)
+            })
+          
+   
+
+
+            menuData.save((err, saved)=>{
+                if(err){
+                    reject({"status": false, "code": 200, "msg": err})
+                }else{
+                    resolve({"status": true, "code": 200, "msg": saved})
+                }
+            })
+
+        }
 
         });
     },

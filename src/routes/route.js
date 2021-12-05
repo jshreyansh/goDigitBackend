@@ -41,6 +41,8 @@ router.get('/api/userDetails/:userId', auth, userController.userDetails)
 router.post('/api/editUserDetails', auth, userController.editUserDetails)
 router.post('/api/createMenu',auth,menuController.createMenu)
 router.get('/api/getMenu/:userId',auth,menuController.getMenu)
+router.get('/api/deleteCategory/:userId/:categoryId',auth,menuController.deleteCategory)
+
 router.post('/api/createOrder',auth,orderController.createOrder)
 router.get('/api/orderList',auth,orderController.getOrderList)
 router.get('/api/getMenu/:userId',userController.getMenu)

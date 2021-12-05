@@ -14,7 +14,11 @@ var MenuSchema = new mongoose.Schema({
             items : [{
                 name:String,
                 price: Number
-            }]
+            }],
+            "isDeleted" : {
+                type : Boolean,
+                default : false
+            }
         }],
         default:null
     },

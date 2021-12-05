@@ -95,5 +95,40 @@ module.exports = {
 
         }
     },
+    deleteCategory: async(req, res) => {
+        try{
+
+            // const data = await menuService.createMenu(req.body, req.files, req.params, req.query)
+            let userId=req.params.userId
+            let categoryId=req.params.categoryId
+            let menuData = await menuModel.findOne({userId:userId})
+            console.log("hello101")
+            if(!menuData){
+                res.status(200).send({ status: false,data :"menu not found" })
+            }
+            
+            for(let i=0;i<menuData.menu.length;i++){
+                   let menuItem=menuData.menu[i]
+            if(menuItem._id==categoryId){
+                item.isDeleted=true
+                break
+                }
+            }
+            console.log("hello102")
+
+            menuData.save((err, saved)=>{
+                if(err){
+                    reject({"status": false, "code": 200, "msg": err})
+                }else{
+                    resolve({"status": true, "code": 200, "msg": saved})
+                }
+            })
+
+            
+        }catch(err){
+            res.status(200).send({ status: false,msg :err })
+
+        }
+    },
 }
 
