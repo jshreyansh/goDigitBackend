@@ -10,6 +10,7 @@ var MenuSchema = new mongoose.Schema({
     "menu" : {
         type:[{
             category : {type: String},
+            itemCount: {type:Number},
             items : [{
                 name:String,
                 price: Number
