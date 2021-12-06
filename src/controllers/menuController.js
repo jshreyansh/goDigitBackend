@@ -95,35 +95,85 @@ module.exports = {
 
         }
     },
-    deleteCategory: async(req, res) => {
+     deleteCategory: async(req, res) => {
+         try{
+             console.log("adas")
+
+             // const data = await menuService.createMenu(req.body, req.files, req.params, req.query)
+             let userId=req.params.userId
+             let categoryId=req.params.categoryId
+             let menuData = await menuModel.findOne({userId:userId})
+             console.log("hello101")
+             if(!menuData){
+                 res.status(200).send({ status: false,data :"menu not found" })
+             }
+             let menu = menuData.menu
+             for(let i=0;i<menu.length;i++)
+             {
+                    if(menu[i]._id == categoryId)
+                    {
+                        menu.splice(i,1);
+                       break;
+                   }
+            }
+            menuData.menu = menu
+            console.log("hello102")
+
+            menuData.save()
+            res.status(200).send({status:true,msg : "Category Deleted Successfully"})
+            
+        }catch(err){
+            res.status(200).send({ status: false,msg :err })
+
+        }
+    },
+     editCategory: async(req, res) => {
         try{
+            console.log("adas")
 
             // const data = await menuService.createMenu(req.body, req.files, req.params, req.query)
-            let userId=req.params.userId
-            let categoryId=req.params.categoryId
+            let userId=req.body.userId
+            let categoryId=req.body.categoryId
             let menuData = await menuModel.findOne({userId:userId})
             console.log("hello101")
             if(!menuData){
                 res.status(200).send({ status: false,data :"menu not found" })
             }
-            
-            for(let i=0;i<menuData.menu.length;i++){
-                   let menuItem=menuData.menu[i]
-            if(menuItem._id==categoryId){
-                item.isDeleted=true
-                break
+            const body = req.body
+            if(!body.category || !body.itemCount)
+            {
+                res.status(200).send({status: false, msg : "Name and No. of items cannot be empty"})
+            }
+            let menu = menuData.menu
+            let checkNameAlreadyExist = 0
+            for(let i=0;i<menu.length;i++)
+            {
+                if(menu[i].category == body.category)
+                {
+                    checkNameAlreadyExist = 1
                 }
             }
+            if(checkNameAlreadyExist)
+            {
+                res.status(200).send({status:false,msg : "Category Already Exist"})
+            }
+            else
+            {
+                for(let i=0;i<menu.length;i++)
+                {
+                    if(menu[i]._id == categoryId)
+                    {
+                        menu[i].category = body.category
+                        menu[i].itemCount = body.itemCount
+                    }
+                }
+            }
+
+            menuData.menu = menu
             console.log("hello102")
 
-            menuData.save((err, saved)=>{
-                if(err){
-                    reject({"status": false, "code": 200, "msg": err})
-                }else{
-                    resolve({"status": true, "code": 200, "msg": saved})
-                }
-            })
-
+            menuData.save()
+            res.status(200).send({status:true,msg : "Category updated Successfully"})
             
         }catch(err){
             res.status(200).send({ status: false,msg :err })
@@ -131,4 +181,7 @@ module.exports = {
         }
     },
 }
+
+// 61ac7492997df707a93177b7
+// 61ac7a6167321c0e031cfbd0
 
