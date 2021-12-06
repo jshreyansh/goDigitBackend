@@ -59,6 +59,7 @@
 
 const menuService = require('../services/menuService');
 const menuModel=require('../models/menuModel')
+const qrCode = require('qrcode')
 
 module.exports = {
     createMenu: async(req, res) => {
@@ -100,8 +101,8 @@ module.exports = {
              console.log("adas")
 
              // const data = await menuService.createMenu(req.body, req.files, req.params, req.query)
-             let userId=req.params.userId
-             let categoryId=req.params.categoryId
+             let userId=req.body.userId
+             let categoryId=req.body.categoryId
              let menuData = await menuModel.findOne({userId:userId})
              console.log("hello101")
              if(!menuData){
@@ -179,7 +180,23 @@ module.exports = {
             res.status(200).send({ status: false,msg :err })
 
         }
+
     },
+    generateQrCode: async(req,res) => {
+        try{
+              const menuId = req.body.menuId
+              if(!menuId)
+              {
+                  res.status(200).send({status:false,msg:"MenuId Required"})
+              }
+              const url = "https://staging.d1a8d9f0os5aqd.amplifyapp.com/"
+              const generatedQrCode = await qrCode.toString(url, {type: 'terminal'})
+              res.status(200).send({status:true,data:generatedQrCode})
+        }
+        catch(error){
+            res.status(200).send({ status: false,msg :error.message })
+        }
+    }
 }
 
 // 61ac7492997df707a93177b7

@@ -1,3 +1,4 @@
+const { string } = require('joi');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId
 const User = require('./userModel')
@@ -21,6 +22,10 @@ var MenuSchema = new mongoose.Schema({
             }
         }],
         default:null
+    },
+    "qrCodeLink" : {
+        type : String,
+        default : ""
     },
     "isDeleted" : {
         type : Boolean,
