@@ -60,6 +60,8 @@
 const menuService = require('../services/menuService');
 const menuModel=require('../models/menuModel')
 const qrCode = require('qrcode')
+const userModel = require('../models/userModel')
+
 
 module.exports = {
     createMenu: async(req, res) => {
@@ -86,6 +88,26 @@ module.exports = {
             let menuData = await menuModel.findOne({userId:userId})
             if(menuData){
                 res.status(200).send({ status: true,data :menuData.menu })
+            }
+            else{
+                res.status(200).send({ status: false,message :"menu not found" })
+
+            }
+        }catch(err){
+            res.status(200).send({ status: false,msg :"bad request" })
+
+        }
+    },
+    getRestaurant: async(req, res) => {
+        try{
+
+            // const data = await menuService.createMenu(req.body, req.files, req.params, req.query)
+            let userId=req.params.userId
+            let menuData = await menuModel.findOne({userId:userId})
+            let userData = await userModel.findOne({_id:userId})
+
+            if(menuData){
+                res.status(200).send({ status: true,menuData :menuData,userData: userData})
             }
             else{
                 res.status(200).send({ status: false,message :"menu not found" })
