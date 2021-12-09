@@ -48,6 +48,9 @@ router.post('/api/createOrder',auth,orderController.createOrder)
 router.get('/api/orderList',auth,orderController.getOrderList)
 router.get('/api/getMenu/:userId',userController.getMenu)
 router.get('/api/generateQrCode',auth,menuController.generateQrCode)
+
+
+
 // router.get('/api/deleteCategory/:userId/:categoryId',auth,menuController.deleteCategory)
 router.get('/api/getMenuWeb/:userId',menuController.getRestaurant)
 
@@ -55,6 +58,9 @@ router.get('/api/getMenuWeb/:userId',menuController.getRestaurant)
 // router.post('/api/createOrder',auth,orderController.createOrder)
 // router.get('/api/orderList',auth,orderController.getOrderList)
 // router.get('/api/getMenu/:userId',userController.getMenu)
+router.post('/api/addItem',auth,menuController.addItems)
+router.post('/api/editItem',auth,menuController.editItem)
+router.post('/api/deleteItem',auth,menuController.deleteItem)
 // router.get('/api/getUsers',userController.getUsers)
 // router.post('/api/userLogin',userController.userLogin)
 // //router.get('/api/getUserInfo/:_id"',userController.getUserInfo)
