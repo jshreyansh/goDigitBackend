@@ -326,6 +326,26 @@ module.exports = {
         {
             return res.status(200).send({status:false,msg:error.message})
         }
+    },
+    getItem : async(req,res) => {
+        try{
+               const userId = req.body.userId
+               const userDocument = await userModel.findOne({"_id" : userId})
+               
+               if(!userDocument)
+               {
+                   return res.status(200).send({status:false,msg:"user not found"})
+               }
+               else
+               {
+                   const items = await itemModel.find({"userId":userId})
+                   return res.status(200).send({status:true,data:items})
+               }
+        }
+        catch(error)
+        {
+            return res.status(200).send({status:false,msg:error.message})   
+        }
     }
 }
 
