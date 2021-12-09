@@ -59,6 +59,7 @@
 
 const menuService = require('../services/menuService');
 const menuModel=require('../models/menuModel')
+const itemModel=require('../models/itemModel')
 const qrCode = require('qrcode')
 
 module.exports = {
@@ -196,9 +197,113 @@ module.exports = {
         catch(error){
             res.status(200).send({ status: false,msg :error.message })
         }
+    },
+    addItems : async(req,res) => {
+        try{
+            const body = req.body
+            const userId = body.userId
+            const menuId = body.menuId
+            const categoryId = body.categoryId
+            const items = body.itemArray
+            let categoryName = ""
+
+            const menuDocument = await menuModel.findOne({"userId" : userId})
+            if(!menuDocument)
+            {
+                res.status(200).send({status:false,msg:"menu not created"})
+            }
+            else
+            {
+                let categoryExist = 0
+                for(let i=0;i<menuDocument.menu.length;i++)
+                {
+                    if(categoryId == menuDocument.menu[i]._id)
+                    {
+                        categoryExist = 1
+                        categoryName = menuDocument.menu[i].category
+                        break
+                    }
+                }
+                if(!categoryExist)
+                {
+                    res.status(200).send({status:false,msg:"category does not exist"})
+                }
+                else
+                {
+                    for(let i=0;i<items.length;i++)
+                    {
+                        const query = {"name":items[i].itemName,"userId":userId}
+                        const itemDocument = await itemModel.findOne(query)
+                        if(itemDocument)
+                        {
+                            res.status(200).send({status:false,msg:"Item with same name already exist"})
+                            break
+                        }
+                        else
+                        {
+                            let itemData = new itemModel({
+                                name : items[i].itemName,
+                                price : items[i].itemPrice,
+                                categoryName : categoryName,
+                                userId : userId
+                            })
+                            await itemData.save()
+                        }
+                    }
+                    res.status(200).send({status:true,msg:"Items Added Successfully"})
+                
+                }
+            }
+            }
+        catch(error){
+            res.status(200).send({status:false,msg:error.message})
+        }
+    },
+    editItem : async(req,res) => {
+        try{
+             const itemId = req.body.itemId
+             const menuId = req.body.menuId
+             const userId = req.body.userId
+             const itemDocument = await itemModel.findOne({"_id" : itemId})
+             const query = {"name":req.body.itemName,"userId":userId}
+             const itemDocumentDuplicate = await itemModel.findOne(query)
+             if(itemDocumentDuplicate)
+             {
+                 return res.status(200).send({status:false,msg:"Item with same name already exist"})
+             }
+             if(!itemDocument)
+             {
+                 return res.status(200).send({status:false,msg:"Item Does not exist"})
+             }
+             else
+             {
+               
+                 if(req.body.itemName)
+                 {
+                     itemDocument.name = req.body.itemName
+                 }
+                 if(req.body.itemPrice)
+                 {
+                     itemDocument.price = req.body.itemPrice
+                 }
+                 await itemDocument.save()
+                 return res.status(200).send({status:true,msg:"Item Updated"})
+            }
+        }
+        catch(error){
+            return res.status(200).send({status:false,msg:error.message})
+        }
+    },
+    deleteItem : async(req,res) => {
+        try{
+             const itemId = req.body.itemId
+             await itemModel.deleteOne({"_id":itemId})
+             return res.status(200).send({status:true,msg:"Item Deleted Successfully"})
+        }
+        catch(error)
+        {
+            return res.status(200).send({status:false,msg:error.message})
+        }
     }
 }
-
-// 61ac7492997df707a93177b7
-// 61ac7a6167321c0e031cfbd0
 

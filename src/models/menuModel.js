@@ -12,10 +12,6 @@ var MenuSchema = new mongoose.Schema({
         type:[{
             category : {type: String},
             itemCount: {type:Number},
-            items : [{
-                name:String,
-                price: Number
-            }],
             "isDeleted" : {
                 type : Boolean,
                 default : false
@@ -23,7 +19,7 @@ var MenuSchema = new mongoose.Schema({
         }],
         default:null
     },
-    "qrCodeLink" : {
+    "onlineMenuLink" : {
         type : String,
         default : ""
     },
