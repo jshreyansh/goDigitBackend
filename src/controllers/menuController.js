@@ -327,7 +327,7 @@ module.exports = {
             return res.status(200).send({status:false,msg:error.message})
         }
     },
-    getItem : async(req,res) => {
+    getAllItem : async(req,res) => {
         try{
                const userId = req.body.userId
                const userDocument = await userModel.findOne({"_id" : userId})
