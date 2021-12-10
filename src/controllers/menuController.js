@@ -267,7 +267,8 @@ module.exports = {
                                 name : items[i].itemName,
                                 price : items[i].itemPrice,
                                 categoryName : categoryName,
-                                userId : userId
+                                userId : userId,
+                                categoryId : categoryId
                             })
                             await itemData.save()
                         }
@@ -327,20 +328,29 @@ module.exports = {
             return res.status(200).send({status:false,msg:error.message})
         }
     },
-    getAllItem : async(req,res) => {
+    getCategoryItem : async(req,res) => {
         try{
                const userId = req.body.userId
-               const userDocument = await userModel.findOne({"_id" : userId})
+               const categoryId = req.body.categoryId
+               const menuDocument = await menuModel.findOne({"userId" : userId})
                
-               if(!userDocument)
+               if(!menuDocument)
                {
-                   return res.status(200).send({status:false,msg:"user not found"})
+                   return res.status(200).send({status:false,msg:"Menu is not created yet"})
                }
                else
                {
-                   const items = await itemModel.find({"userId":userId})
-                   return res.status(200).send({status:true,data:items})
+                   for(let i=0;i<menuDocument.menu.length;i++)
+                   {
+                       if(categoryId==menuDocument.menu[i]._id)
+                       {
+                             const items = await itemModel.find({"userId":userId,"categoryId":categoryId})
+                             return res.status(200).send({status:true,data:items})
+                             break
+                       }
+                   }   
                }
+               return res.status(200).send({status:false,msg:"category not found"})
         }
         catch(error)
         {

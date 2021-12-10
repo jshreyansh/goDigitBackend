@@ -16,6 +16,9 @@ const itemSchema = new mongoose.Schema({
     categoryName : {
         type : String,
         default : ""
+    },
+    categoryId : {
+        type : String
     }
 })
 module.exports = mongoose.model('Item',itemSchema)
