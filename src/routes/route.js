@@ -47,7 +47,7 @@ router.post('/api/editCategory/',auth,menuController.editCategory)
 router.post('/api/createOrder',auth,orderController.createOrder)
 router.get('/api/orderList',auth,orderController.getOrderList)
 router.get('/api/getMenu/:userId',userController.getMenu)
-router.get('/api/generateQrCode/:categoryId',auth,menuController.generateQrCode)
+router.get('/api/generateQrCode/:menuId',auth,menuController.generateQrCode)
 
 
 // router.get('/api/deleteCategory/:userId/:categoryId',auth,menuController.deleteCategory)

@@ -207,19 +207,19 @@ module.exports = {
     },
     generateQrCode: async(req,res) => {
         try{
-              const menuId = req.params.categoryId
-              if(!menuId)
-              {
-                  res.status(200).send({status:false,msg:"MenuId Required"})
-              }
-              const url = "https://staging.d1a8d9f0os5aqd.amplifyapp.com/"
-              const generatedQrCode = await qrCode.toString(url, {type: 'terminal'})
-              console.log("ccccccc",typeof generatedQrCode)
-              res.status(200).send({status:true,data:generatedQrCode})
-        }
-        catch(error){
-            res.status(200).send({ status: false,msg :error.message })
-        }
+            const userId = req.params.userId
+            const menuDocument = await menuModel.findOne({"userId":userId})
+            if(!menuDocument)
+            {
+                return res.status(200).send({status:false,msg:"Menu not created yet"})
+            }
+            const url = "https://staging.d1a8d9f0os5aqd.amplifyapp.com/"
+            const generatedQrCode = await qrCode.toString(url, {type: 'terminal'})
+            res.status(200).send({status:true,data:generatedQrCode})
+      }
+      catch(error){
+          res.status(200).send({ status: false,msg :error.message })
+      }
     },
     addItems : async(req,res) => {
         try{
