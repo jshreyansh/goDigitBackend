@@ -2,6 +2,7 @@ const userModel =require('../models/userModel')
 const menuModel =require('../models/menuModel')
 const mongoose=require('mongoose')
 const jwt=require('jsonwebtoken')
+const axios = require('axios')
 
 let registerUser = async function (req,res) {
 
@@ -14,15 +15,22 @@ let registerUser = async function (req,res) {
             let query = {mobile: mobile}
             let user = await userModel.findOne(query)
             if (user) {
+               const otp = user.otp
+               const mobileNumber = user.mobile
+               let sendStatus = await axios.get(`http://2factor.in/API/V1/bb1223a8-5d02-11ec-b710-0200cd936042/SMS/${mobileNumber}/${otp}`)
+
                 // smsSender.sendOtp(mobile, user.otp)
-                res.status(200).send({ status: true,message :"existing user" })
+               return res.status(200).send({ status: true,message :"existing user" })
             } else
             {
                 var newUser = new userModel({
                     mobile: mobile
                 })
                 let result = await newUser.save()
-                res.status(200).send({ status: true,message :"New user" })
+                const otp = result.otp
+                const mobileNumber = result.mobile
+                let sendStatus = await axios.get(`http://2factor.in/API/V1/bb1223a8-5d02-11ec-b710-0200cd936042/SMS/${mobileNumber}/${otp}`)
+                return res.status(200).send({ status: true,message :"New user" })
             }
         }
         else {
