@@ -62,7 +62,7 @@ const menuModel=require('../models/menuModel')
 const itemModel=require('../models/itemModel')
 const qrCode = require('qrcode')
 const userModel = require('../models/userModel')
-
+const lodash = require('lodash')
 
 module.exports = {
     createMenu: async(req, res) => {
@@ -99,16 +99,28 @@ module.exports = {
 
         }
     },
-    getRestaurant: async(req, res) => {
+    getMenuWeb: async(req, res) => {
         try{
 
             // const data = await menuService.createMenu(req.body, req.files, req.params, req.query)
             let userId=req.params.userId
-            let menuData = await menuModel.findOne({userId:userId})
+          //  let menuData = await menuModel.findOne({userId:userId})
             let userData = await userModel.findOne({_id:userId})
+            let itemsList = await itemModel.find({userId : userId})
+            console.log(itemsList)
+            // const itemInCategory = lodash.groupBy(itemsList,categoryName)
+            // console.log(itemInCategory)
 
-            if(menuData){
-                res.status(200).send({ status: true,menuData :menuData,userData: userData})
+            let itemInCategory = lodash.reduce(itemsList, (result, user) => {
+
+                (result[user.categoryName] || (result[user.categoryName] = [])).push(user);
+                return result;
+            }, {});
+            console.log(itemInCategory)
+
+
+            if(itemsList){
+                res.status(200).send({ status: true, data :itemInCategory, userdata :userData })
             }
             else{
                 res.status(200).send({ status: false,message :"menu not found" })

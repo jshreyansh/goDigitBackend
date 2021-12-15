@@ -51,7 +51,7 @@ router.get('/api/generateQrCode/:userId',auth,menuController.generateQrCode)
 
 
 // router.get('/api/deleteCategory/:userId/:categoryId',auth,menuController.deleteCategory)
-router.get('/api/getMenuWeb/:userId',menuController.getRestaurant)
+router.get('/api/getMenuWeb/:userId',menuController.getMenuWeb)
 
 
 // router.post('/api/createOrder',auth,orderController.createOrder)
