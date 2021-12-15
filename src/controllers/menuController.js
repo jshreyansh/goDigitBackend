@@ -215,7 +215,10 @@ module.exports = {
             }
             const url = "https://staging.d1a8d9f0os5aqd.amplifyapp.com/"
             const generatedQrCode = await qrCode.toString(url, {type: 'terminal'})
-            res.status(200).send({status:true,data:generatedQrCode})
+            //example image
+            let example="https://picsum.photos/200"
+            let example2=
+            res.status(200).send({status:true,data:example,url:url})
       }
       catch(error){
           res.status(200).send({ status: false,msg :error.message })
