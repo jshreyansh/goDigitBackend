@@ -107,7 +107,7 @@ module.exports = {
           //  let menuData = await menuModel.findOne({userId:userId})
             let userData = await userModel.findOne({_id:userId})
             let itemsList = await itemModel.find({userId : userId})
-            console.log(itemsList)
+            // console.log(itemsList)
             // const itemInCategory = lodash.groupBy(itemsList,categoryName)
             // console.log(itemInCategory)
 
@@ -116,11 +116,18 @@ module.exports = {
                 (result[user.categoryName] || (result[user.categoryName] = [])).push(user);
                 return result;
             }, {});
-            console.log(itemInCategory)
-
-
-            if(itemsList){
-                res.status(200).send({ status: true, data :itemInCategory, userdata :userData })
+            // console.log(itemInCategory)
+            const menu=[]
+            Object.keys(itemInCategory)
+                .forEach(function eachKey(key) { 
+                    let obj={}
+                    obj.category=key
+                    obj.items=itemInCategory[key]
+                    menu.push(obj)
+                })
+            // console.log("menu",menu)
+            if(menu){
+                res.status(200).send({ status: true, data :menu, userdata :userData })
             }
             else{
                 res.status(200).send({ status: false,message :"menu not found" })
