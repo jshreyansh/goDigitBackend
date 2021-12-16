@@ -232,12 +232,14 @@ module.exports = {
             {
                 return res.status(200).send({status:false,msg:"Menu not created yet"})
             }
-            const url = "https://staging.d1a8d9f0os5aqd.amplifyapp.com/"
+            const url = "https://staging.d2qhyt7hxak6e8.amplifyapp.com/"
+            const menuUrl=url+`stall/${userId}`
+            
             const generatedQrCode = await qrCode.toString(url, {type: 'terminal'})
             //example image
             let example="https://picsum.photos/200"
             let example2=
-            res.status(200).send({status:true,data:example,url:url})
+            res.status(200).send({status:true,data:example,url:menuUrl})
       }
       catch(error){
           res.status(200).send({ status: false,msg :error.message })
