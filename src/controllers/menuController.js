@@ -315,7 +315,9 @@ module.exports = {
              const itemDocument = await itemModel.findOne({"_id" : itemId})
              const query = {"name":req.body.itemName,"userId":userId}
              const itemDocumentDuplicate = await itemModel.findOne(query)
-             if(itemDocumentDuplicate)
+            //  console.log(itemDocumentDuplicate._id)
+            //  console.log(String(itemDocumentDuplicate._id) !== itemId,typeof itemId)
+             if(itemDocumentDuplicate && String(itemDocumentDuplicate._id) !== itemId)
              {
                  return res.status(200).send({status:false,msg:"Item with same name already exist"})
              }
