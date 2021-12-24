@@ -25,19 +25,21 @@ let registerUser = async function (req,res) {
                 user.save()
                const otp = user.otp
                const mobileNumber = user.mobile
-               let sendStatus = await axios.get(`http://2factor.in/API/V1/bb1223a8-5d02-11ec-b710-0200cd936042/SMS/${mobileNumber}/${otp}`)
+            //    let sendStatus = await axios.get(`http://2factor.in/API/V1/bb1223a8-5d02-11ec-b710-0200cd936042/SMS/${mobileNumber}/${otp}`)
 
                 // smsSender.sendOtp(mobile, user.otp)
                return res.status(200).send({ status: true,message :"existing user" })
             } else
-            {
+            {   
+                const newOtp = Math.floor(1000 + Math.random() * 9000);
                 var newUser = new userModel({
                     mobile: mobile
                 })
+                newUser.otp=newOtp
                 let result = await newUser.save()
                 const otp = result.otp
                 const mobileNumber = result.mobile
-                let sendStatus = await axios.get(`http://2factor.in/API/V1/bb1223a8-5d02-11ec-b710-0200cd936042/SMS/${mobileNumber}/${otp}`)
+                // let sendStatus = await axios.get(`http://2factor.in/API/V1/bb1223a8-5d02-11ec-b710-0200cd936042/SMS/${mobileNumber}/${otp}`)
                 return res.status(200).send({ status: true,message :"New user" })
             }
         }
