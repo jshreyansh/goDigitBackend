@@ -9,8 +9,10 @@ let OrdersSchema = new mongoose.Schema({
         {
             "itemId" : {
                 type : ObjectId,
-                name : String,
                 ref : "Item"
+            },
+            "itemName" : {
+                type : String
             },
             "quantity" : {
                 type : Number,
