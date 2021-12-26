@@ -1,20 +1,25 @@
 const mongoose = require('mongoose')
 const ObjectId = mongoose.Schema.Types.ObjectId
 const User = require('./userModel')
+const Item = require('./itemModel')
 
 let OrdersSchema = new mongoose.Schema({
       
     "itemsPlaced" : [
         {
-            "itemId" : ObjectId,
+            "itemId" : {
+                type : ObjectId,
+                name : String,
+                ref : "Item"
+            },
             "quantity" : {
                 type : Number,
             }
         }
     ],
-    "stallId" : {
+    "userId" : {
         type : ObjectId,
-        ref : 'User'
+        ref : "User"
     },
     "totalCost" : {
         type : Number
@@ -25,7 +30,22 @@ let OrdersSchema = new mongoose.Schema({
     "isPaid" : {
         type : Boolean,
         default : false
-    }
+    },
+    "date" : {
+        type : Date
+    },
+    "orderStatus" : {
+        type : String,
+        enum : ["orderPlaced", "orderAccepted" , "orderRejected" , "orderCompleted"],
+        default : "orderPlaced"
+    },
+    "totalOrderNumber" : {
+        type : Number,
+        default : 0
+    },
+    orderCustomisation : {
+        type : String
+    },
 },{timestamps : true})
 
 module.exports = mongoose.model('orders',OrdersSchema)

@@ -44,8 +44,7 @@ router.get('/api/getMenu/:userId',auth,menuController.getMenu)
 router.post('/api/deleteCategory/',auth,menuController.deleteCategory)
 router.post('/api/editCategory/',auth,menuController.editCategory)
 
-router.post('/api/createOrder',auth,orderController.createOrder)
-router.get('/api/orderList',auth,orderController.getOrderList)
+// router.get('/api/orderList',auth,orderController.getOrderList)
 router.get('/api/getMenu/:userId',userController.getMenu)
 router.get('/api/generateQrCode/:userId',auth,menuController.generateQrCode)
 
@@ -66,6 +65,12 @@ router.get('/api/getCategoryItem/:userId/:categoryId',auth,menuController.getCat
 // //router.get('/api/getUserInfo/:_id"',userController.getUserInfo)
 // router.get('/api/users/:userId',tokenVerification, userController.getUserInfo)
 // router.put('/api/putUserInfo/:userId',tokenVerification,userController.putUserInfo)
+//router.post('/api/placeOrder',orderController.createOrder)
+router.post('/api/createOrder',orderController.createOrder)
+router.get('/api/getTodayOrders/:userId',orderController.getTodayOrders)
+router.get('/api/getAllOrders/:userId',orderController.getAllOrders)
+router.post('/api/updateOrderStatus',orderController.updateOrderStatus)
+
 
 
 

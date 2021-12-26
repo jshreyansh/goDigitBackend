@@ -100,7 +100,7 @@ module.exports = {
         }
     },
     getMenuWeb: async(req, res) => {
-        try{
+        try{git
 
             // const data = await menuService.createMenu(req.body, req.files, req.params, req.query)
             let userId=req.params.userId
@@ -315,8 +315,9 @@ module.exports = {
              const itemDocument = await itemModel.findOne({"_id" : itemId})
              const query = {"name":req.body.itemName,"userId":userId}
              const itemDocumentDuplicate = await itemModel.findOne(query)
-            //  console.log(itemDocumentDuplicate._id)
-            //  console.log(String(itemDocumentDuplicate._id) !== itemId,typeof itemId)
+              console.log(itemDocumentDuplicate._id)
+              console.log(itemId)
+              console.log(String(itemDocumentDuplicate._id) !== itemId,typeof itemId)
              if(itemDocumentDuplicate && String(itemDocumentDuplicate._id) !== itemId)
              {
                  return res.status(200).send({status:false,msg:"Item with same name already exist"})
