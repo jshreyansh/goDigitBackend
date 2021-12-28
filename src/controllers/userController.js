@@ -140,13 +140,15 @@ let editUserDetails = async(req,res)=>{
           userDocument.stallName = req.body.stallName
           userDocument.location.cityName = req.body.livesIn
           userDocument.name = req.body.userName
+          userDocument.currentlyAcceptingOrder = req.body.currentlyAcceptingOrder
           let result = await userDocument.save()
           console.log("userDocument",userDocument)
           console.log("result",result)
           const userDetails = {
             userName : userDocument.name,
             stallName : userDocument.stallName,
-            livesIn : userDocument.location.cityName
+            livesIn : userDocument.location.cityName,
+            currentlyAcceptingOrder : currentlyAcceptingOrder
         }
         res.status(200).send({status : true,"userDetails": userDetails})
            

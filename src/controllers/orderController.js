@@ -12,6 +12,8 @@ module.exports = {
           let itemsPlaced = body.itemsPlaced
           let userId = body.userId
           let totalCost = body.totalCost
+          let dineIn = body.dineIn
+          let orderInstructions = body.orderInstructions
           let query = {_id : userId}
           const userDocument = await userModel.findOne(query)
           const dateTime = new Date();
@@ -26,6 +28,8 @@ module.exports = {
               userId : userId,
               totalCost : totalCost,
               orderNumber : orderNumber,
+              dineIn : dineIn,
+              orderInstructions : orderInstructions,
               date : date,
               totalOrderNumber : totalOrderNumber
           })

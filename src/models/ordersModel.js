@@ -45,9 +45,13 @@ let OrdersSchema = new mongoose.Schema({
         type : Number,
         default : 0
     },
-    orderCustomisation : {
+    "orderInstructions" : {
         type : String
     },
+    "dineIn" : {
+        type : Boolean,
+        default : true
+    }
 },{timestamps : true})
 
 module.exports = mongoose.model('orders',OrdersSchema)

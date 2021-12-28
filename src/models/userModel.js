@@ -48,6 +48,10 @@ const userSchema = new mongoose.Schema({
     stallName:{
         type:String,
         default:""
+    },
+    currentlyAcceptingOrder : {
+        type : Boolean,
+        default : true
     }
 })
 
