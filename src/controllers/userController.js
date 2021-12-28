@@ -116,10 +116,13 @@ let userDetails= async (req,res)=> {
         const userId = req.params.userId
         const query = {"_id":userId}
         let userDocument = await userModel.findOne(query)
+        const url = "https://staging.d2qhyt7hxak6e8.amplifyapp.com/"
+            const menuUrl=url+`stall/${userId}`
         const userDetails = {
             userName : userDocument.name,
             stallName : userDocument.stallName,
-            livesIn : userDocument.location.cityName
+            livesIn : userDocument.location.cityName,
+            url: menuUrl ,
         }
 
         if (userDocument) {

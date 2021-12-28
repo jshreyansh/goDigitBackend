@@ -100,8 +100,7 @@ module.exports = {
         }
     },
     getMenuWeb: async(req, res) => {
-        try{git
-
+        try{
             // const data = await menuService.createMenu(req.body, req.files, req.params, req.query)
             let userId=req.params.userId
           //  let menuData = await menuModel.findOne({userId:userId})
