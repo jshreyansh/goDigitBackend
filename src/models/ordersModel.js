@@ -14,6 +14,9 @@ let OrdersSchema = new mongoose.Schema({
             "itemName" : {
                 type : String
             },
+            "itemPrice" : {
+                type: Number
+            },
             "quantity" : {
                 type : Number,
             }
@@ -23,6 +26,10 @@ let OrdersSchema = new mongoose.Schema({
         type : ObjectId,
         ref : "User"
     },
+    "customerMobile" : {
+         type : Number 
+    },
+    
     "totalCost" : {
         type : Number
     },

@@ -10,6 +10,7 @@ module.exports = {
           console.log("12")
           const body = req.body
           let itemsPlaced = body.itemsPlaced
+          let customerMobile = body.customerNumber
           let userId = body.userId
           let totalCost = body.totalCost
           let dineIn = body.dineIn
@@ -31,7 +32,9 @@ module.exports = {
               dineIn : dineIn,
               orderInstructions : orderInstructions,
               date : date,
-              totalOrderNumber : totalOrderNumber
+              totalOrderNumber : totalOrderNumber,
+              customerMobile:customerMobile
+
           })
           let result = await newOrder.save()
           res.status(200).send({data : result})

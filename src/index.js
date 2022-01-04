@@ -2,7 +2,9 @@ const route = require('./routes/route.js');
 const express = require('express');
 const app = express();
 var multer=require('multer')
+var cors = require('cors')
 
+app.use(cors())
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
